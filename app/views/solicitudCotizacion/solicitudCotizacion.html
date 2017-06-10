@@ -1,0 +1,124 @@
+  <template ngbModalContainer></template>
+<div class="card">
+	<div class="card-block">
+		<table class="table table-striped table-sm">
+			<tr>
+			    <th></th>
+				<th>Codigo</th>
+				<th>Descripcion</th>
+				<th>Fecha</th>
+
+			</tr>
+<tbody *ngIf="listadoEncabezado">
+<tr *ngFor="let reg of listadoEncabezado.data" scope="row">
+<td>    <button    type="button" class="btn btn-success  btn-sm"       (click)="cargarDetalle(detalleCotizacion,reg)" ><i class="fa fa-plus-square"  ></i> Seleccionar    </button></td>
+<td>{{reg.id}}</td>
+<td>{{reg.descripcion}}</td>
+<td>{{reg.fecha}}</td>
+</tr>
+	</tbody>
+	</table>
+	</div>
+</div>
+
+<template #contentMensajeConfirmacion>
+ <div [ngSwitch]="esError"> 
+<div *ngSwitchCase=0  class="alert alert-success" role="alert">
+  <strong> {{modalMensaje}}</strong> 
+</div>
+<div *ngSwitchCase=1  class="alert alert-danger" role="alert">
+  <strong> {{modalMensaje}}</strong> 
+</div>
+</div>
+</template>
+
+<template #detalleCotizacion >
+<div class= "card">
+<div class="card-header">
+	<h1>Generar Cotización</h1>
+</div>
+<div class="card-block">
+	<!--
+	<table class="table table-striped table-sm">
+			<tr>
+				<th>Codigo</th>
+				<th>Solped</th>
+				<th>Posición</th>
+				<th>Descripción</th>
+				<th>Cantidad</th>
+				<th>Precio Unitario</th>
+
+			</tr>
+<tbody *ngIf="listadoDetalle">
+<tr *ngFor="let reg of listadoDetalle.data" scope="row">
+<td>{{reg.id}}</td>
+<td>{{reg.NUMERO_SOLPED}} </td>
+<td>{{reg.PREQ_ITEM}}</td>
+<td>{{reg.SHORT_TEXT}}</td>
+ <td>
+<input  type="text" class="form-control mb-2 mr-sm-2 mb-sm-0"  [(ngModel)]="reg.CANTIDAD"          (ngModelChange)="recalcularTotal($event)">
+</td>
+  <td>
+<input  type="text" class="form-control mb-2 mr-sm-2 mb-sm-0"  [(ngModel)]="reg.PRECIOUNITARIO"    (ngModelChange)="recalcularTotal($event)">
+</td>
+</tr>
+	
+</tbody>
+
+		</table>
+!-->
+		<form [formGroup]="frmDetalleCotizaciones" novalidate  >
+ 			<table class="table table-striped table-sm">
+			<tr>
+				<th>Codigo</th>
+				<th>Solped</th>
+				<th>Posición</th>
+				<th>Descripción</th>
+				<th>Cantidad</th>
+				<th>Cantidad Ofertada</th>
+				<th>Precio Unitario</th>
+
+			</tr>
+			  <tbody formArrayName="listado">
+			  <tr *ngFor="let rec of frmDetalleCotizaciones.controls.listado.controls;let i= index; ">
+			   		<td> {{frmDetalleCotizaciones.controls.listado.controls[i].controls.id.value}}</td>
+			   		<td> {{frmDetalleCotizaciones.controls.listado.controls[i].controls.NUMERO_SOLPED.value}}</td>
+			   		<td> {{frmDetalleCotizaciones.controls.listado.controls[i].controls.PREQ_ITEM.value}}</td>
+			   		<td> {{frmDetalleCotizaciones.controls.listado.controls[i].controls.SHORT_TEXT.value}}</td>
+			   		<td> {{frmDetalleCotizaciones.controls.listado.controls[i].controls.CANTIDAD.value}}</td>
+			   		<td>
+              				<div [formGroupName]="i">
+              				<input type="text" class="form-control" formControlName="CANTIDAD_OFERTADA" pattern="[0-9]+([.][0-9]+)?" required 
+              				(ngModelChange)="recalcularTotal($event)">
+              				<small [hidden]="frmDetalleCotizaciones.controls.listado.controls[i].controls.CANTIDAD_OFERTADA.valid">
+                        		Cantidad invalida
+              				</small>
+              				</div>
+          			</td>
+          			<td>
+              				<div [formGroupName]="i">
+              				<input type="text" class="form-control" formControlName="PRECIOUNITARIO" pattern="[0-9]+([.][0-9]+)?" required
+              				(ngModelChange)="recalcularTotal($event)">
+              				<small [hidden]="frmDetalleCotizaciones.controls.listado.controls[i].controls.PRECIOUNITARIO.valid">
+                        		Cantidad invalida
+              				</small>
+              				</div>
+          			</td>
+			  </tr>
+			  </tbody>
+			</table>
+
+		</form>
+
+</div>
+<div class="card-footer">
+ 
+ <input #FileCotizacion type="file"  (change)="fileChange($event)"   placeholder="Subir Cotización" accept=".pdf,.doc,.docx"> 
+
+<button type="button"  class="btn btn-primary  btn-sm" (click)="EnviarCotizacion(contentMensajeConfirmacion,FileCotizacion) "> Enviar Cotización</button>
+<br>
+Total : <h2>{{total | currency:'USD':true:'1.2-2'}}</h2>
+</div>
+</div>
+		</template>
+ <spinner [isRunning]="isRequesting"></spinner>

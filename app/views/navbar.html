@@ -1,0 +1,39 @@
+<div>
+<nav class="navbar navbar-toggleable-md  navbar-inverse bg-inverse">
+<img src="img/logo-tecnoglass.png">
+ 
+
+  <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <a class="navbar-brand" href="#"><b><h2>Compras</h2></b></a>
+  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <div class="navbar-nav" *ngIf="currentUser">
+      
+      <div *ngIf="currentRole=='compras'  ||currentRole=='admin'  ">  
+      <a class="nav-item nav-link"         [routerLinkActive]="['is-active']" routerLink="/habilitacion">Habilitar Items <span class="sr-only">(current)</span></a>
+      </div> 
+      <div *ngIf="currentRole=='compras'  ||currentRole=='admin'    ">  
+      <a class="nav-item nav-link"         [routerLinkActive]="['is-active']" routerLink="/filtros">Filtros<span class="sr-only">(current)</span></a>
+       </div >
+      <div *ngIf="currentRole=='compras'  ||currentRole=='admin'    ">  
+      <a class="nav-item nav-link"         [routerLinkActive]="['is-active']" routerLink="/asociacion">Asociación Manual <span class="sr-only">(current)</span></a>
+       </div >
+      <div *ngIf="currentRole=='compras'  ||currentRole=='admin'  "> 
+      <a class="nav-item nav-link"         [routerLinkActive]="['is-active']" routerLink="/grupos">Grupos</a>
+      </div>
+      <div *ngIf="currentRole=='compras'  ||currentRole=='admin'   "> 
+      <a class="nav-item nav-link"         [routerLinkActive]="['is-active']" routerLink="/proveedores">Proveedores</a>
+      </div>
+      <div *ngIf="currentRole=='proveedor'||currentRole=='admin'  ">  
+      <a class="nav-item nav-link"         [routerLinkActive]="['is-active']" routerLink="/solcotizacion">Generar Cotización</a>
+      </div> 
+
+    </div>
+  </div>
+  <form class="form-inline my-2 my-lg-0" *ngIf="currentUser">
+     <button class="btn btn-success my-2 my-sm-0" (click)= "logout()"> <i class="fa fa-sign-out"></i> Salir</button>
+  </form>
+</nav>
+</div>
+ <router-outlet></router-outlet>

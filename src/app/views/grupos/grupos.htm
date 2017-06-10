@@ -1,0 +1,63 @@
+ 
+   <div class="card">
+  <div class="card-header">
+  <div class="card">
+  <div class="card-header" >Grupos Seleccionados</div>
+  <div class="card-block">
+       <div class="form-inline">
+  <label class="sr-only" for="inlineFormInput">Grupos</label>
+  <input #Codigo type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" id="txtSolped" placeholder="Codigo">
+
+  <label class="sr-only" for="inlineFormInputGroup">Posicion</label>
+  <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+  
+    <input #Descripcion type="text" class="form-control" id="txtPosicion" placeholder="Descripción">
+  </div>
+  
+</div>
+  </div>
+  <div class="card-footer text-muted">
+  <button  class="btn btn-primary" (click)="filtrarGrupos(Codigo.value,Descripcion.value)"><i class="fa fa-filter" aria-hidden="true"></i> Filtrar</button>  
+
+  </div>
+</div>
+ 
+  </div>
+ <div class="card-block" style= "overflow:scroll;">
+     <table class="table table-striped" style= "overflow:scroll;">
+  <thead>
+    <tr>
+      <th></th>
+      
+      <th>Codigo</th>
+      <th>Descripcion</th>
+    </tr>
+  </thead>
+    <tbody *ngIf="listado"> 
+      <tr  *ngFor="let grupo of listado.data" scope="row">
+      <td>
+      
+      <div class="btn-group" role="group">
+        <div [ngSwitch]="showbuttons">
+                <button  *ngSwitchCase="0" type="button" class="btn btn-secondary  btn-sm"       (click)="seleccionarGrupo(grupo)" > Seleccionar    </button>
+                <button  *ngSwitchCase="1" type="button"  class="btn btn-secondary  btn-sm"      (click)="eliminarGrupo(grupo)"    >  Eliminar       </button>
+                <button  *ngSwitchCase="1" type="button"  class="btn btn-secondary  btn-sm"      (click)="actualizarGrupo(grupo)"  > Actualizar     </button>
+        </div>
+      </div>
+        
+          </td>
+      <td>{{grupo.id}}</td>
+      <td>{{grupo.descripcion}}</td>
+
+      </tr>
+    </tbody>
+</table>
+  </div>
+  <div class="card-footer text-muted">
+    <div *ngIf="listado">
+     <ngb-pagination [(collectionSize)]="listado._meta.totalCount" [(page)]="page" pageSize = "10"  
+      (pageChange)="pageChanged($event)">
+    </ngb-pagination>
+   </div>
+   </div>
+  </div>

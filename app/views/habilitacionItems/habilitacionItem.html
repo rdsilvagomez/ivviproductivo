@@ -1,0 +1,289 @@
+
+
+
+  <template ngbModalContainer></template>
+ <br>
+
+ <div class="container-fluid">
+ 
+ 	 
+ <div class="card">
+ <div class="card-header">
+     <div class="form-inline">
+	    	<div class="btn-group mr-2" role="group"  > 
+	     								
+	    	<listadoDisponiblesmdl    (onPosicionSeleccionada)="onPosicionSeleccionada($event)" ></listadoDisponiblesmdl>
+	    	</div>
+	    	<div class="btn-group mr-2" role="group"  >
+	    	<button class="btn btn-danger " (click)= "sincronizarPosiciones(contentMensajeConfirmacion)"  >Sincronizar             </button>
+	    	</div>
+	    	<div class="btn-group mr-2" role="group" >
+	    	<button class="btn btn-primary" (click)="guardarListado(contentMensajeConfirmacion,contentEnviarRegistros)" >Solicitar Cotizaciones</button>
+     
+	    	</div>
+        <div class="btn-group mr-2" role="group">
+         <button type = "button" class ="btn btn-success" (click)="CargarCotizacionManual(contentSolpedManual)">
+          Cargue Manual 
+        </button>
+
+        </div>
+
+	    </div>
+  </div>
+
+  <div class="card-block">
+ <div class="row">
+<div class="col">
+<div class="card">
+<div class="card-header">
+   <b> Item Posiciones Seleccionadas</b>
+  </div>
+
+	 <div class="card-block">
+		 
+<form [formGroup]="frmSolpedisponibles" novalidate (ngSubmit)="save(frmSolpedisponibles.value, frmSolpedisponibles.valid)">
+
+    
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Solped</th>
+      <th>Item</th>
+      <!--<th>Created By</th>-->
+      <th>Short Text</th>
+      <th>Unidad </th>
+      <th>Cantidad</th>
+    </tr>
+  </thead>
+  <tbody formArrayName="listadoDisponibles">
+        <tr *ngFor="let address of frmSolpedisponibles.controls.listadoDisponibles.controls;let i= index; ">
+           <td>  
+            <div class="btn-toolbar" role="toolbar">
+            <div class="btn-group mr-2" role="group" >
+                <seleccionarGrupo [(solpedSeleccionada)]="frmSolpedisponibles.controls.listadoDisponibles.controls[i].controls.NUMERO_SOLPED.value" 
+                                  [(posicionSeleccionada)]="frmSolpedisponibles.controls.listadoDisponibles.controls[i].controls.PREQ_ITEM.value"  > 
+                </seleccionarGrupo>
+            </div>
+            <div class="btn-group mr-2" role="group" >
+               <seleccionarProveedor [(solpedSeleccionada)]   = "frmSolpedisponibles.controls.listadoDisponibles.controls[i].controls.NUMERO_SOLPED.value" 
+                                        [(posicionSeleccionada)] = "frmSolpedisponibles.controls.listadoDisponibles.controls[i].controls.PREQ_ITEM.value" 
+                                         asociar="1" > 
+                  </seleccionarProveedor>
+            </div>
+            <div class="btn-group mr-2" role="group" >
+                <button type = "button" class ="btn btn-danger btn-sm" (click)="removerSolpedisponible(i)">
+                Remover
+                </button>
+            </div>
+            <div class="btn-group mr-2" role="group" >
+                <seleccionarProveedor [(solpedSeleccionada)]   = "frmSolpedisponibles.controls.listadoDisponibles.controls[i].controls.NUMERO_SOLPED.value" 
+                                 [(posicionSeleccionada)] = "frmSolpedisponibles.controls.listadoDisponibles.controls[i].controls.PREQ_ITEM.value"  
+                                  asociar="0">
+                </seleccionarProveedor>
+            </div>                              
+      </div>
+      </td>
+          <td> {{frmSolpedisponibles.controls.listadoDisponibles.controls[i].controls.NUMERO_SOLPED.value}}</td>
+          <td> {{frmSolpedisponibles.controls.listadoDisponibles.controls[i].controls.PREQ_ITEM.value}}</td>
+          <!--<td> {{frmSolpedisponibles.controls.listadoDisponibles.controls[i].controls.CREATED_BY.value}}</td>-->
+          <td> {{frmSolpedisponibles.controls.listadoDisponibles.controls[i].controls.SHORT_TEXT.value}}</td>
+          <td> {{frmSolpedisponibles.controls.listadoDisponibles.controls[i].controls.UNIT.value}}</td>
+          <td>
+              <div [formGroupName]="i">
+              <input type="text" class="form-control" formControlName="CANTIDAD" pattern="[0-9]+([.][0-9]+)?" required>
+              <small [hidden]="frmSolpedisponibles.controls.listadoDisponibles.controls[i].controls.CANTIDAD.valid">
+                        Cantidad invalida
+              </small>
+              </div>
+          </td>
+
+       </tr>
+  </tbody>
+  </table>
+
+  
+    
+</form>
+ 
+</div>
+ </div>
+ </div>
+
+ </div> </div> </div>
+
+<template #contentSolpedManual  let-c="close" let-d="dismiss">
+        <div class="modal-header">
+       <div class="btn-toolbar" role="toolbar">
+        <div class="btn-group mr-2" role="group" >
+        <seleccionarGrupo [(solpedSeleccionada)]="SeqPosicionesMantenimiento" 
+                           posicionSeleccionada="0"  > 
+        </seleccionarGrupo>
+        </div>
+
+        <div class="btn-group mr-2" role="group"  >
+        
+         <seleccionarProveedor [(solpedSeleccionada)]="SeqPosicionesMantenimiento" 
+                           posicionSeleccionada="0"  > 
+        </seleccionarProveedor>
+        
+        </div>
+
+        <div class="btn-group mr-2" role="group"  >
+        <button type = "button" class ="btn btn-success btn-sm" (click)="adicionarItemManual()">Adicionar Item</button>
+        </div>        
+
+    </div>      
+        </div>
+       
+        <div class="modal-body"  >
+      
+ <form [formGroup]="frmSolpedManual" novalidate (ngSubmit)="save(frmSolpedManual.value, frmSolpedManual.valid)">
+
+    
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Descripción</th>
+      <th>Observaciones</th>
+      <th>Cantidad</th>
+    </tr>
+  </thead>
+  <tbody formArrayName="listadoSopedManual">
+        <tr *ngFor="let address of frmSolpedManual.controls.listadoSopedManual.controls;let i= index; ">
+           <td>  
+       
+        
+       <button type = "button" class ="btn btn-danger btn-sm" (click)="removerSolpedManual(i)">
+        Remover 
+      </button>
+
+      </td>
+          <td [formGroupName]="i">  <input type="text" formControlName="SHORT_TEXT"   required>   </td>
+          <td [formGroupName]="i">  <input type="text" formControlName="MATERIAL"     required>   </td>
+         
+      
+          <td>
+              <div [formGroupName]="i">
+              <input type="text" formControlName="CANTIDAD" pattern="[0-9]+([.][0-9]+)?" required>
+              <small [hidden]="frmSolpedManual.controls.listadoSopedManual.controls[i].controls.CANTIDAD.valid">
+                        Cantidad invalida
+              </small>
+              </div>
+          </td>
+
+       </tr>
+  </tbody>
+  </table>
+
+  
+    
+</form>
+
+        </div>
+        <div class="modal-footer">
+        <button type = "button" class ="btn btn-primary btn-sm" (click)="EnviarCotizacionManual(contentMensajeConfirmacion)">Enviar Cotización Manual</button>
+        </div>
+
+       
+
+</template>
+
+<template #contentEnviarRegistros let-c="close" let-d="dismiss">
+        <div class="modal-header">
+         
+        </div>
+        <div class="modal-body"  >
+          <div class="form-group">
+    <label for="exampleTextarea">Información para el proveedor</label>
+    <textarea #informacionAdicional class="form-control"   rows="3"></textarea>
+           </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary" (click)="solicitarCotizacion(contentMensajeConfirmacion,informacionAdicional.value)" >Solicitar Cotizaciones</button>
+        </div>
+
+</template>
+
+<template #contentMensajeConfirmacion>
+ <div [ngSwitch]="esError"> 
+<div *ngSwitchCase=0  class="alert alert-success" role="alert">
+  <strong> {{modalMensaje}}</strong> 
+</div>
+<div *ngSwitchCase=1  class="alert alert-danger" role="alert">
+  <strong> {{modalMensaje}}</strong> 
+</div>
+</div>
+</template>
+
+
+  <template #contentGroup let-c="close" let-d="dismiss">
+        <div class="modal-header">
+           
+       
+        </div>
+        <div class="modal-body"  >
+         <div class="container">
+          <div class="row">
+            <div class="col-6" style= "overflow:scroll;">
+              <listadoGrupos #GruposSeleccionados   
+                        showbuttons=0  
+                        [(solped)]="solpedSeleccionada" 
+                        [(posicion)]="posicionSeleccionada" 
+                        filtrarXgrupo=1 
+                        (onGrupoSeleccionado)="onGrupoSeleccionado($event)">
+              </listadoGrupos>
+            </div>
+            <div class="col-6" style= "overflow:scroll;">
+              <listadoGrupos #GruposNoSeleccionados   
+                        showbuttons=0  [(solped)]="solpedSeleccionada" 
+                        [(posicion)]="posicionSeleccionada" 
+                        filtrarXgrupo=0 
+                        (onGrupoSeleccionado)="onGrupoSeleccionado($event)">
+              </listadoGrupos>     
+            </div>
+          </div>
+          </div>
+         </div>
+        <div class="modal-footer">
+            <button type="button"  class="btn btn-primary  btn-sm" (click)="c('Close click')"> Cerrar</button>
+        </div>
+  </template>
+
+
+   <template #contentProveedores let-c="close" let-d="dismiss">
+        <div class="modal-header">
+        </div>
+        <div class="modal-body"  >
+         <div class="container">
+          <div class="row">
+            <div class="col-6">
+              <listadoProveedores #ProveedoresSeleccionados   
+                      showbuttons=0  
+                      [(numeroSolped)] = "solpedSeleccionada"
+                      [(posicion)]     = "posicionSeleccionada"
+                      seleccion=1 
+                      grupoid=  "0"
+                      (onProveedorSeleccionado) = "onProveedorSeleccionado($event)">
+              </listadoProveedores>
+            </div>
+            <div class="col-6">
+              <listadoProveedores #ProveedoresNoSeleccionados   
+                      showbuttons   = 0  
+                      [(numeroSolped)]= "solpedSeleccionada"
+                      [(posicion)]    = "posicionSeleccionada"
+                      seleccion=0 
+                      grupoid=  "0"
+                      (onProveedorSeleccionado)="onProveedorSeleccionado($event)">
+             </listadoProveedores>     
+            </div>
+          </div>
+          </div>
+         </div>
+        <div class="modal-footer">
+        </div>
+  </template>
+
+ 
+   <spinner [isRunning]="isRequesting"></spinner>

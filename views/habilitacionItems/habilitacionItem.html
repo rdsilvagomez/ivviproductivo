@@ -1,0 +1,97 @@
+
+
+
+  <template ngbModalContainer></template>
+ <br>
+
+ <div class="container-fluid">
+ 
+ 	 
+ <div class="card">
+ <div class="card-header">
+     <div class="form-inline">
+	    	<div class="btn-group mr-2" role="group"  > 
+	     								
+	    	<listadoDisponiblesmdl    (onPosicionSeleccionada)="onPosicionSeleccionada($event)" ></listadoDisponiblesmdl>
+	    	</div>
+	    	<div class="btn-group mr-2" role="group"  >
+	    	<button class="btn btn-danger "  >Sincronizar               </button>
+	    	</div>
+	    	<div class="btn-group mr-2" role="group" >
+	    	<button class="btn btn-primary" (click)="guardarListado()" >Solicitar Cotizaciones</button>
+	    	</div>
+	    </div>
+  </div>
+
+  <div class="card-block">
+ <div class="row">
+<div class="col">
+<div class="card">
+<div class="card-header">
+   <b> Item Posiciones Seleccionadas</b>
+  </div>
+
+	 <div class="card-block">
+				  <table class="table table-striped">
+  <thead  >
+    <tr>
+       <th>Solped</th>
+      <th>Item</th>
+      <th>DocType</th>
+      <th>Created By</th>
+      <th>CheckOn</th>
+      <th>PreqName</th>
+      <th>Short Text</th>
+      <th>Material</th>
+      <th>Material External</th>
+    </tr>
+  </thead>
+    <tbody *ngIf="listado">
+      <tr  *ngFor="let item of listado">
+      <td> 
+    <seleccionarGrupo [(solpedSeleccionada)]="item.NUMERO_SOLPED" [(posicionSeleccionada)]="item.PREQ_ITEM" > </seleccionarGrupo>
+      </td>
+      <td>{{item.NUMERO_SOLPED}}</td>
+      <td>{{item.PREQ_ITEM}}</td>
+      <td>{{item.DOC_TYPE}}</td>
+      <td>{{item.CREATED_BY}}</td>
+      <td>{{item.CH_ON}}</td>
+      <td>{{item.PREQ_NAME}}</td>
+      <td>{{item.SHORT_TEXT}}</td>
+      <td>{{item.MATERIAL}}</td>
+      <td>{{item.MATERIAL_EXTERNAL}}</td>
+       </tr>
+    </tbody>
+</table>
+	 </div>
+
+</div>
+ </div>
+ </div>
+
+ </div> </div> </div>
+  <template #contentGroup let-c="close" let-d="dismiss">
+        <div class="modal-header">
+           
+       
+        </div>
+        <div class="modal-body"  >
+         <div class="container">
+          <div class="row">
+            <div class="col-6" style= "overflow:scroll;">
+              <listadoGrupos #GruposSeleccionados   showbuttons=0  [(solped)]="solpedSeleccionada" [(posicion)]="posicionSeleccionada" filtrarXgrupo=1 
+              (onGrupoSeleccionado)="onGrupoSeleccionado($event)">
+              </listadoGrupos>
+            </div>
+            <div class="col-6" style= "overflow:scroll;">
+              <listadoGrupos #GruposNoSeleccionados   showbuttons=0  [(solped)]="solpedSeleccionada" [(posicion)]="posicionSeleccionada" filtrarXgrupo=0 
+              (onGrupoSeleccionado)="onGrupoSeleccionado($event)"></listadoGrupos>     
+            </div>
+          </div>
+          </div>
+         </div>
+        <div class="modal-footer">
+            <button type="button"  class="btn btn-primary  btn-sm" (click)="c('Close click')"> Cerrar</button>
+        </div>
+  </template>
+   <spinner [isRunning]="isRequesting"></spinner>

@@ -1,0 +1,35 @@
+ 
+        <div class="modal-header">
+        </div>
+        <div class="modal-body"  >
+         <div class="container">
+          <div class="row">
+            <div class="col-6">
+              <listadoProveedores #ProveedoresSeleccionados   
+                      showbuttons = 0  
+                      [(numeroSolped)] = "solpedSeleccionada"
+                      [(posicion)]     = "posicionSeleccionada"
+                      [(asociar)]      = "asociar"
+                      seleccion        = 1 
+                      grupoid          =  "0"
+                      (onProveedorSeleccionado) = "onProveedorSeleccionado($event)">
+              </listadoProveedores>
+            </div>
+            <div class="col-6">
+              <listadoProveedores #ProveedoresNoSeleccionados   
+                      showbuttons      = 0  
+                      [(numeroSolped)] = "solpedSeleccionada"
+                      [(posicion)]     = "posicionSeleccionada"
+                      [(asociar)]      = "asociar"
+                      seleccion        = 0 
+                      grupoid          = "0"
+                      (onProveedorSeleccionado)="onProveedorSeleccionado($event)">
+             </listadoProveedores>     
+            </div>
+          </div>
+          </div>
+         </div>
+           <div class="modal-footer">
+            <button type="button"  class="btn btn-primary  btn-sm" (click)="c('Close click')"> Cerrar</button>
+        </div>
+ 

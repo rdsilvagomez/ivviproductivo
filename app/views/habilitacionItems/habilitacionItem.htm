@@ -1,0 +1,91 @@
+
+
+
+  <template ngbModalContainer></template>
+ <br>
+
+ <div class="container-fluid">
+ 
+ 	 
+ <div class="card">
+ <div class="card-header">
+     <div class="form-inline">
+	    	<div class="btn-group mr-2" role="group"  > 
+	     								
+	    	<listadoDisponiblesmdl    (onPosicionSeleccionada)="onPosicionSeleccionada($event)" ></listadoDisponiblesmdl>
+	    	</div>
+	    	<div class="btn-group mr-2" role="group"  >
+	    	<button class="btn btn-outline-default  "  >Guardar               </button>
+	    	</div>
+	    	<div class="btn-group mr-2" role="group" >
+	    	<button class="btn btn-outline-default  "  >Solicitar Cotizaciones</button>
+	    	</div>
+	    </div>
+  </div>
+
+  <div class="card-block">
+ <div class="row">
+<div class="col">
+<div class="card">
+<div class="card-header">
+   <b> Item Posiciones Seleccionadas</b>
+  </div>
+
+	 <div class="card-block">
+				  <table class="table table-striped">
+  <thead  >
+    <tr>
+       <th>Solped</th>
+      <th>Item</th>
+      <th>DocType</th>
+      <th>Created By</th>
+      
+      <th>PreqName</th>
+      <th>Short Text</th>
+      <th>Material</th>
+      
+    </tr>
+  </thead>
+    <tbody *ngIf="listado">
+      <tr  *ngFor="let item of listado">
+      <td><button type="button" class="btn btn-default"  (click)="openGrupos(contentGroup,item.NUMERO_SOLPED,item.PREQ_ITEM)">Asociar Grupo</button>
+            <button type="button" class="btn btn-default" >Asociar Proveedor</button>
+      </td>
+      <td>{{item.NUMERO_SOLPED}}</td>
+      <td>{{item.PREQ_ITEM}}</td>
+      <td>{{item.DOC_TYPE}}</td>
+      <td>{{item.CREATED_BY}}</td>
+      
+      <td>{{item.PREQ_NAME}}</td>
+      <td>{{item.SHORT_TEXT}}</td>
+      <td>{{item.MATERIAL}}</td>
+ 
+       </tr>
+    </tbody>
+</table>
+	 </div>
+
+</div>
+ </div>
+ </div>
+
+ </div> </div> </div>
+  <template #contentGroup let-c="close" let-d="dismiss">
+        <div class="modal-header">
+        </div>
+        <div class="modal-body"  >
+         <div class="container-fluid">
+          <div class="row">
+            <div class="col-6">
+              <listadoGrupos   showbuttons=0  [(solped)]="solpedSeleccionada" [(posicion)]="posicionSeleccionada" filtrarXgrupo=1>
+              </listadoGrupos>
+            </div>
+            <div class="col-6">
+              <listadoGrupos   showbuttons=0  [(solped)]="solpedSeleccionada" [(posicion)]="posicionSeleccionada" filtrarXgrupo=0></listadoGrupos>     
+            </div>
+          </div>
+          </div>
+         </div>
+        <div class="modal-footer">
+        </div>
+  </template>

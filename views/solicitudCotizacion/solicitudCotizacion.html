@@ -1,0 +1,53 @@
+<div class="card">
+	<div class="card-block">
+		<table class="table table-striped table-sm">
+			<tr>
+			    <th></th>
+				<th>Codigo</th>
+				<th>Descripcion</th>
+				<th>Fecha</th>
+
+			</tr>
+<tbody *ngIf="listadoEncabezado">
+<tr *ngFor="let reg of listadoEncabezado.data" scope="row">
+<td>    <button    type="button" class="btn btn-success  btn-sm"       (click)="cargarDetalle(reg)" ><i class="fa fa-plus-square"  ></i> Seleccionar    </button></td>
+<td>{{reg.id}}</td>
+<td>{{reg.descripcion}}</td>
+<td>{{reg.fecha}}</td>
+
+</tr>
+	
+</tbody>
+
+		</table>
+		<table class="table table-striped table-sm">
+			<tr>
+				<th>Codigo</th>
+				<th>Descripcion</th>
+				<th>Fecha</th>
+				<th></th>
+				<th></th>
+				<th></th>
+
+			</tr>
+<tbody *ngIf="listadoDetalle">
+<tr *ngFor="let reg of listadoDetalle.data" scope="row">
+<td>{{reg.id}}</td>
+<td>{{reg.NUMERO_SOLPED}} </td>
+<td>{{reg.PREQ_ITEM}}</td>
+<td>{{reg.SHORT_TEXT}}</td>
+<td>{{reg.MATERIAL}}</td>
+<td>
+<input  type="text" class="form-control mb-2 mr-sm-2 mb-sm-0"  [(ngModel)]="reg.cantidad"   >
+</td>
+ 
+</tr>
+	
+</tbody>
+
+		</table>
+
+	</div>
+
+</div>
+ <spinner [isRunning]="isRequesting"></spinner>

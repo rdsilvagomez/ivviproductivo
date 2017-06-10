@@ -1,0 +1,24 @@
+ 
+        <div class="modal-header">
+           
+       
+        </div>
+        <div class="modal-body"  >
+         <div class="container">
+          <div class="row">
+            <div class="col-6" style= "overflow:scroll;">
+              <listadoGrupos #GruposSeleccionados   showbuttons=0  [(solped)]="solpedSeleccionada" [(posicion)]="posicionSeleccionada" filtrarXgrupo=1 
+              (onGrupoSeleccionado)="onGrupoSeleccionado($event)">
+              </listadoGrupos>
+            </div>
+            <div class="col-6" style= "overflow:scroll;">
+              <listadoGrupos #GruposNoSeleccionados   showbuttons=0  [(solped)]="solpedSeleccionada" [(posicion)]="posicionSeleccionada" filtrarXgrupo=0 
+              (onGrupoSeleccionado)="onGrupoSeleccionado($event)"></listadoGrupos>     
+            </div>
+          </div>
+          </div>
+         </div>
+        <div class="modal-footer">
+            <button type="button"  class="btn btn-primary  btn-sm" (click)="c('Close click')"> Cerrar</button>
+        </div>
+ 

@@ -1,0 +1,66 @@
+ 
+   <div class="card">
+  <div class="card-header">
+    <div class="form-inline">
+  <label class="sr-only" for="inlineFormInput">Proveedores</label>
+  <input #Codigo type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" id="txtSolped" placeholder="Codigo">
+
+  <label class="sr-only" for="inlineFormInputGroup">Posicion</label>
+  <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+  
+    <input #Descripcion type="text" class="form-control" id="txtPosicion" placeholder="Descripción">
+  </div>
+<button  class="btn btn-primary btn-sm" (click)="filtrarProveedores(Codigo.value,Descripcion.value)"><i class="fa fa-filter" aria-hidden="true"></i> Filtrar</button>
+</div>
+  </div>
+ <div class="card-block" style= "overflow:scroll;x">
+ <div class="card">
+    <div [ngSwitch]="showbuttons"> 
+ <div *ngSwitchCase=1 class="card-header">
+    <form class="form-inline">
+  <input #descripcionProveedorNuevo type="text" class="form-control mb-2 mr-sm-2 mb-sm-0"      >
+  <button type="button" class="btn btn-warning btn-sm"  (click)="ingresarProveedor(descripcionProveedorNuevo.value)">Ingresar Nuevo Proveedor</button>  </form>
+ </div>
+</div>
+ <div class="card-block">
+
+     <table class="table table-striped table-sm" style= "overflow:scroll;">
+  <thead>
+    <tr>
+      <th>Seleccionar </th>
+      <th>Codigo</th>
+      <th>Descripcion</th>
+    </tr>
+  </thead>
+    <tbody *ngIf="listado">
+    
+ 
+      <tr  *ngFor="let prov of listado.data">
+      <td>
+       <div class="btn-group" role="group">
+       <div [ngSwitch]="showbuttons"> 
+      <button *ngSwitchCase=1  type="button" class="btn btn-danger btn-sm"  (click)="eliminarproveedor(prov)"><i class="fa fa-trash-o"></i> Eliminar    </button>
+     
+      <button *ngSwitchCase=1 type="button" class="btn btn-primary btn-sm"  (click)="actualizarproveedor(prov)"><i class="fa fa-floppy-o"  > </i> Actualizar  </button>
+      <button *ngSwitchCase=0 type="button" class="btn btn-success btn-sm"  (click)="asociarproveedor(prov)"><i class="fa fa-link-o"></i> Seleccionar </button>
+      </div>
+      </div>
+      </td>
+  
+      <td>{{prov.id}}</td>
+      <td>{{prov.descripcion}}</td>
+
+      </tr>
+    </tbody>
+</table>
+  </div> </div>
+  </div>
+  <div class="card-footer text-muted">
+    <div *ngIf="listado">
+     <ngb-pagination [(collectionSize)]="listado._meta.totalCount" [(page)]="page" pageSize = "10"  
+      (pageChange)="pageChanged($event)">
+    </ngb-pagination>
+   </div>
+   </div>
+  </div>
+ <spinner [isRunning]="isRequesting"></spinner>

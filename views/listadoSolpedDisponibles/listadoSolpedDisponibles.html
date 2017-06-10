@@ -1,0 +1,73 @@
+<template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+
+    <h4 class="modal-title">Listado Solped Disponibles</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body"  >
+   
+   <div class="card">
+  <div class="card-header">
+    <div class="form-inline">
+  <label class="sr-only" for="inlineFormInput">Solped</label>
+  <input #Solped type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" id="txtSolped" placeholder="Solped">
+
+  <label class="sr-only" for="inlineFormInputGroup">Posicion</label>
+  <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+  
+    <input #Posicion type="text" class="form-control" id="txtPosicion" placeholder="Posición">
+  </div>
+
+ <button  class="btn btn-primary" (click)="filtrarPosiciones(Solped.value,Posicion.value)">Filtrar</button>
+</div>
+  </div>
+  <div class="card-block" style= "overflow:scroll;height:500px">
+    
+     
+     <table class="table table-striped table-sm" style= "overflow:scroll;height:500px">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Solped</th>
+      <th>Item</th>
+      <th>Short Text</th>
+      <th>Material</th>
+      <th>Material External</th>
+    </tr>
+  </thead>
+    <tbody *ngIf="listado">
+      <tr  *ngFor="let item of listado.data">
+      <td><button type="button" class="btn btn-success btn-sm"  (click)="seleccionarItem(item)"><i class="fa fa-plus-square"  ></i> Seleccionar</button></td>
+      <td>{{item.NUMERO_SOLPED}}</td>
+      <td>{{item.PREQ_ITEM}}</td>
+       
+      <td>{{item.SHORT_TEXT}}</td>
+      <td>{{item.MATERIAL}}</td>
+      <td>{{item.MATERIAL_EXTERNAL}}</td>
+    
+      </tr>
+    </tbody>
+</table>
+  </div>
+   <div class="card-footer text-muted">
+    <div *ngIf="listado">
+<ngb-pagination [(collectionSize)]="listado._meta.totalCount" [(page)]="page" pageSize = "10"  
+(pageChange)="pageChanged($event)">
+  
+</ngb-pagination>
+</div>
+  </div>
+</div>
+
+ 
+ 
+  </div>
+  <div class="modal-footer">
+
+    <button type="button"  class="btn btn-primary  btn-sm" (click)="c('Close click')"> Cerrar</button>
+  </div>
+</template>
+<button class="btn btn-primary " (click)="open(content)">Solped Disponibles</button>
+ <spinner [isRunning]="isRequesting"></spinner>

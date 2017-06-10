@@ -1,0 +1,29 @@
+
+<div class="card">
+<div class="card-header">
+    <button  class="btn btn-primary btn-sm" (click)="actualizarValores( )"><i class="fa fa-filter" aria-hidden="true"></i> Actualizar Filtros</button>  
+</div>
+ <div class="card-block">
+ 	<div  >
+ <div class="form-group">
+    <label for="docTypeInput">DocType</label>
+    <input #DOC_TYPE class="form-control mb-2 mr-sm-2 mb-sm-0"   id="docTypeInput"    placeholder="Ingresa DocType"    [(ngModel)]="reg.DOC_TYPE" >
+ </div>
+ <div class="form-group">
+    <label for="CreatedByInput">CreatedBy</label>
+    <input #CREATED_BY class="form-control mb-2 mr-sm-2 mb-sm-0" id="CreatedByInput"   placeholder="Ingresa CreatedBy" [(ngModel)]="reg.CREATED_BY">
+ </div>
+ <div class="form-group">
+    <label for="purGroupInput">PurGroup</label>
+    <input #PUR_GROUP class="form-control mb-2 mr-sm-2 mb-sm-0"  id="purGroupInput"    placeholder="Ingresa PurGroup"  [(ngModel)]="reg.PUR_GROUP">
+ </div> 
+ <div class="form-group">
+    <label for="plantInput">Plant</label>
+    <input #PLANT class="form-control mb-2 mr-sm-2 mb-sm-0"     id="plantInput"       placeholder="Ingresa Plant"     [(ngModel)]="reg.PLANT">
+ </div>
+</div>
+ </div>
+
+</div>
+
+ {{reg|json}}
